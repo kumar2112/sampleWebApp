@@ -13,8 +13,8 @@
              @csrf
              <input type="hidden" name="txtHiddenRouterId" id="txtHiddenRouterId" value="{{rtrim(base64_encode($router->id),'==')}}">
              <div class="form-group">
-                <label for="txtDnsRecord">DNS Records</label>
-                <input value="{{$router->dns_records}}" type="number" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="No Of DNS Record">
+                <label for="txtDnsRecord">Sap Id</label>
+                <input value="{{$router->sap_id}}" type="number" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="No Of DNS Record">
                 @if($errors->has('txtDnsRecord'))
                   <span class="text-danger">{{$errors->first('txtDnsRecord')}}</span>
                 @endif

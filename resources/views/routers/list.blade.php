@@ -9,63 +9,71 @@
   </div>
   <div class="row">
       <div class="col-md-12">
-        <table class="table table-striped">
+        <table class="table table-striped" id="routerTable">
             <thead>
               <tr>
                   <th>#ID</th>
-                  <th>DNS Records</th>
+                  <th>Sap Id</th>
                   <th>Host Name</th>
                   <th>Client Ip Address</th>
                   <th>Mac Address</th>
-
                   <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              @foreach ($Routers as $router)
-               <tr>
-                  <td><strong>#{{$router->id}}</strong></td>
-                  <td>{{$router->dns_records}}</td>
-                  <td>{{$router->internet_host_name}}</td>
-                  <td>{{$router->client_ip_address}}</td>
-                  <td>{{$router->mac_address}}</td>
-                  <td>
-                    <a href="{{route('router.edit',array('id'=>rtrim(base64_encode($router->id),'==')))}}"><i class="fa fa-edit">Edit</i></a>
-                    <b>| </b>
-                    <a class="deleteRouter" href="{{route('router.delete',array('id'=>rtrim(base64_encode($router->id),'==')))}}" ><i class="fa fa-trash">Delete</i></a>
-                  </td>
-               </tr>
-               @endforeach
-            </tbody>
-        </table>
-        {{ $Routers->links() }}
+         </table>
       </div>
   </div>
 </div>
 <script>
-      $(document).ready(function(){
-          //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-          $(".deleteRouter").click(function(){
+
+     $(document).ready(function() {
+       $.fn.dataTable.ext.errMode = 'none';
+       $('#routerTable').DataTable( {
+         			"serverSide": true,
+              "ordering": false,
+              "info" :true,
+              "pageLength": 2,
+              "ajax": {
+                  "url": "<?php echo url('/routers') ?>",
+                  'headers': {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  "type": "POST"
+              },
+              "columns": [
+                            { "data": "id" },
+                            { "data": "sap_id" },
+                            { "data": "internet_host_name" },
+                            { "data": "client_ip_address" },
+                            { "data": "mac_address"},
+                            { "data": "action" }
+                          ],
+        });
+   	});
+    $(document).ready(function(){
+        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        //$(".deleteRouter").on("click", function(){
+        $('body').on('click', '.deleteRouter', function() {
             var elm=$(this);
-              $.ajax({
-                  /* the route pointing to the post function */
-                  url: $(this).attr('href'),
-                  type: 'GET',
-                  /* send the csrf-token and the input to the controller */
-                  dataType: 'JSON',
-                  /* remind that 'data' is the response of the AjaxController */
-                  success: function (data) {
-                      if(data.status=="success"){
-                          elm.closest('tr').remove();
-                          $("#alert-message").html('<div class="alert alert-success">'+data.message+'</div>');
-                          //form.reset();
-                      }else if(data.status=="error"){
-                          $("#alert-message").html('<div class="alert alert-danger">'+data.message+'</div>');
-                      }
-                  }
-              });
-              return false;
-          });
-     });
+            $.ajax({
+                /* the route pointing to the post function */
+                url: $(this).attr('href'),
+                type: 'GET',
+                /* send the csrf-token and the input to the controller */
+                dataType: 'JSON',
+                /* remind that 'data' is the response of the AjaxController */
+                success: function (data) {
+                    if(data.status=="success"){
+                         elm.text(data.rstatus);
+                        $("#alert-message").html('<div class="alert alert-success">'+data.message+'</div>');
+                        //form.reset();
+                    }else if(data.status=="error"){
+                        $("#alert-message").html('<div class="alert alert-danger">'+data.message+'</div>');
+                    }
+                }
+            });
+            return false;
+        });
+   });
 </script>
 @stop

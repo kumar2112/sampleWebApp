@@ -12,29 +12,29 @@
           <form action="{{route('router.store')}}" method="post"  id="addRouterDataForm">
              @csrf
              <div class="form-group">
-                <label for="txtDnsRecord">DNS Records</label>
-                <input type="number" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="No Of DNS Record">
+                <label for="txtDnsRecord">Sap Id</label>
+                <input maxlength="18" type="text" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="Sap Id">
                 @if($errors->has('txtDnsRecord'))
                   <span class="text-danger error">{{$errors->first('txtDnsRecord')}}</span>
                 @endif
               </div>
               <div class="form-group">
                  <label for="txtInternetHostName">Internet Host Name</label>
-                 <input type="text" class="form-control" id="txtInternetHostName" name="txtInternetHostName" aria-describedby="EmployeeNameHelp" placeholder="Host Name">
+                 <input maxlength="14"  type="text" class="form-control" id="txtInternetHostName" name="txtInternetHostName" aria-describedby="EmployeeNameHelp" placeholder="Host Name">
                  @if($errors->has('txtInternetHostName'))
                    <span class="text-danger">{{$errors->first('txtInternetHostName')}}</span>
                  @endif
               </div>
               <div class="form-group">
                 <label for="txtClientIpAddress">Client Ip Address</label>
-                <input type="text" class="form-control" id="txtClientIpAddress" name="txtClientIpAddress" placeholder="Ip Address">
+                <input maxlength="100"  type="text" class="form-control" id="txtClientIpAddress" name="txtClientIpAddress" placeholder="Ip Address">
                 @if($errors->has('txtClientIpAddress'))
                   <span class="text-danger">{{$errors->first('txtClientIpAddress')}}</span>
                 @endif
               </div>
               <div class="form-group">
                 <label for="txtMacAddress">Mac Address</label>
-                <input type="text" class="form-control" id="txtMacAddress" name="txtMacAddress" placeholder="Mac Address">
+                <input maxlength="17"  type="text" class="form-control" id="txtMacAddress" name="txtMacAddress" placeholder="Mac Address">
                 @if($errors->has('txtMacAddress'))
                   <span class="text-danger">{{$errors->first('txtMacAddress')}}</span>
                 @endif
@@ -66,6 +66,7 @@
                         $("#alert-message").html('<div class="alert alert-danger">'+data.message+'</div>');
                     }else if(data.status=="errors"){
                         $.each(data.message, function( index, value ) {
+                             $("#"+index).parent().find('.text-danger').remove();
                              $("#"+index).parent().append('<span class="text-danger">'+value+'</span>');
                         });
                     }

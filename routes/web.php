@@ -18,9 +18,10 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/routers', 'RouterController@listEmployee')->name('router.list');
+//Route::get('/routers', 'RouterController@listEmployee')->name('router.list');
+//Route::match(array('GET','POST'),'router.list','RouterController@listEmployee');
 
-
+Route::match(['get','post'],'/routers', array('as' => 'router.list', 'uses' => 'RouterController@listEmployee'));
 
 Route::get('/routers/create', 'RouterController@createRouter')->name('router.create');
 
