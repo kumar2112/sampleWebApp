@@ -43,13 +43,22 @@ class generateRecords extends Command
         }
         $bar = $this->output->createProgressBar($n);
         $bar->start();
+
+        $sapIdPrefix="SAP00";
         for($i=0;$i<$n;$i++){
+            $max_id=Routers::max('id');
+            if(!empty($max_id)){
+               $sap_id=$sapIdPrefix.$max_id;
+            }else{
+               $sap_id=$sapIdPrefix."1";
+            }
             $router=new Routers;
-            $router->sap_id=$i.time();
+            $router->sap_id=$sap_id;
             $router->internet_host_name='example_'.$i.'.com';
-            $router->client_ip_address="192.7.67.1".$i;
+            $router->client_ip_address="192.11.2.".$max_id;
             $router->mac_address="233:335:33:".$i;
             $router->save();
+            echo "Record with sapid ".$sap_id. " inserted .\n";
         }
         $bar->finish();
 
