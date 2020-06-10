@@ -132,9 +132,11 @@ class RouterController extends Controller{
      *
      */
      public function storeRouter(Request $request){
+          $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+
           $validator = Validator::make($request->all(),[
-                           'txtDnsRecord' => 'required|integer|max:255',
-                           'txtInternetHostName' => 'required|url',
+                           'txtDnsRecord' => 'required|alpha_num',
+                           'txtInternetHostName' => 'required|regex:'.$regex,
                            'txtClientIpAddress' => 'required|ip',
                            'txtMacAddress' => 'required',
                         ]);
@@ -168,7 +170,7 @@ class RouterController extends Controller{
 
         $id=$id."==";
         $routerId=base64_decode(trim($id));
-        $router=Routers::where('id','=',$routerId)->where('is_deleted','=','0')->get()->first();
+        $router=Routers::where('id','=',$routerId)->get()->first();
 
         if(empty($router)){
            abort(404);
@@ -183,9 +185,10 @@ class RouterController extends Controller{
      *
      */
      public function updateRouter(Request $request){
+       $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
        $validator = Validator::make($request->all(),[
-                        'txtDnsRecord' => 'required|integer|max:255',
-                        'txtInternetHostName' => 'required|url',
+                        'txtDnsRecord' => 'required|alpha_num',
+                        'txtInternetHostName' => 'required|regex:'.$regex,
                         'txtClientIpAddress' => 'required|ip',
                         'txtMacAddress' => 'required',
                      ]);
@@ -199,8 +202,8 @@ class RouterController extends Controller{
                 $id=trim($request->txtHiddenRouterId);
                 $id=$id."==";
                 $routerId=base64_decode(trim($id));
-                //$routerCount=Routers::where('client_ip_address','=',trim($request->txtClientIpAddress))->where('id','<>',$routerId)->count();
-                $routerCount=Routers::where('client_ip_address','=',trim($request->txtClientIpAddress))->count();
+                $routerCount=Routers::where('client_ip_address','=',trim($request->txtClientIpAddress))->where('id','<>',$routerId)->count();
+                //$routerCount=Routers::where('client_ip_address','=',trim($request->txtClientIpAddress))->count();
                 if($routerCount>0){
                    return response()->json(['status'=>'error', 'message'=>'Ip address should be unique.']);
                 }

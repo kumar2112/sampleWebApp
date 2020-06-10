@@ -15,10 +15,10 @@ class CreateRoutersTable extends Migration
     {
         Schema::create('routers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('sap_id',18);
-            $table->string('internet_host_name',14);
-            $table->string('client_ip_address',100);
-            $table->string('mac_address',17);
+            $table->string('sap_id',100);
+            $table->string('internet_host_name',100);
+            $table->string('client_ip_address',80);
+            $table->string('mac_address',60);
             $table->tinyInteger('is_deleted')->default('0');
             $table->timestamps();
         });

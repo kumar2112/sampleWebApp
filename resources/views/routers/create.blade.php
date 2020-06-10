@@ -13,14 +13,14 @@
              @csrf
              <div class="form-group">
                 <label for="txtDnsRecord">Sap Id</label>
-                <input maxlength="18" type="text" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="Sap Id">
+                <input maxlength="50" type="text" class="form-control" id="txtDnsRecord" name="txtDnsRecord" aria-describedby="EmployeeNameHelp" placeholder="Sap Id">
                 @if($errors->has('txtDnsRecord'))
                   <span class="text-danger error">{{$errors->first('txtDnsRecord')}}</span>
                 @endif
               </div>
               <div class="form-group">
                  <label for="txtInternetHostName">Internet Host Name</label>
-                 <input maxlength="14"  type="text" class="form-control" id="txtInternetHostName" name="txtInternetHostName" aria-describedby="EmployeeNameHelp" placeholder="Host Name">
+                 <input maxlength="100"  type="text" class="form-control" id="txtInternetHostName" name="txtInternetHostName" aria-describedby="EmployeeNameHelp" placeholder="Host Name">
                  @if($errors->has('txtInternetHostName'))
                    <span class="text-danger">{{$errors->first('txtInternetHostName')}}</span>
                  @endif
@@ -34,7 +34,7 @@
               </div>
               <div class="form-group">
                 <label for="txtMacAddress">Mac Address</label>
-                <input maxlength="17"  type="text" class="form-control" id="txtMacAddress" name="txtMacAddress" placeholder="Mac Address">
+                <input maxlength="100"  type="text" class="form-control" id="txtMacAddress" name="txtMacAddress" placeholder="Mac Address">
                 @if($errors->has('txtMacAddress'))
                   <span class="text-danger">{{$errors->first('txtMacAddress')}}</span>
                 @endif
