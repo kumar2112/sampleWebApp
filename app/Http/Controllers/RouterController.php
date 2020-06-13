@@ -133,12 +133,13 @@ class RouterController extends Controller{
      */
      public function storeRouter(Request $request){
           $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+          $mac_address_regex='/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/';
 
           $validator = Validator::make($request->all(),[
-                           'txtDnsRecord' => 'required|alpha_num',
-                           'txtInternetHostName' => 'required|regex:'.$regex,
+                           'txtDnsRecord' => 'required|min:18|alpha_num',
+                           'txtInternetHostName' => 'required|min:14|regex:'.$regex,
                            'txtClientIpAddress' => 'required|ip',
-                           'txtMacAddress' => 'required',
+                           'txtMacAddress' => 'required|min:18|regex:'.$mac_address_regex,
                         ]);
           if ($validator->fails()) {
             return response()->json(['status'=>'errors', 'message'=>$validator->errors()]);

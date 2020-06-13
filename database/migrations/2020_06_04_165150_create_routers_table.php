@@ -21,6 +21,8 @@ class CreateRoutersTable extends Migration
             $table->string('mac_address',60);
             $table->tinyInteger('is_deleted')->default('0');
             $table->timestamps();
+
+            $table->unique(['sap_id', 'internet_host_name','client_ip_address','mac_address']);
         });
     }
 
